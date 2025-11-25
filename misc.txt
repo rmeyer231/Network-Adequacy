@@ -1,0 +1,66 @@
+adr_input	nbs_field
+Access Required Dist	access_required dist
+Access Required Time	access_required time
+CountyClass	countyclass
+CountyName	countyname
+CountySSA	countyssa
+DistanceCriteria	distancecriteria
+Existing_Expansion	existing_expansion
+InCountyPrvs	incountyprvs
+MetAccess	metaccess
+MetOverall	metoverall
+MetPrvs	metprvs
+Min Access Required Providers	min_access required providers
+PassPctCriteria	passpctcriteria
+PctWithAccess	pctwithaccess
+Professional_Facility	professional_facility
+ProviderGroup	providergroup
+RequiredPrvs	requiredprvs
+ServicingPrvs	servicingprvs
+SpecCode	speccode
+SpecDesc	specdesc
+StateAbbr	stateabbr
+TelehealthCreditPercent	telehealthcreditpercent
+TimeCriteria	timecriteria
+Total Providers	total_providers
+
+
+
+CREATE MULTISET TABLE gim_analytics.na_adr 
+     (
+      id BIGINT NOT NULL,
+      ntwk_input VARCHAR(255) ,
+      na_state VARCHAR(2) ,
+      lob VARCHAR(100) ,
+      county VARCHAR(100) ,
+      spec_input VARCHAR(255) ,
+      standard_ntwk INTEGER,
+      specialty_id INTEGER,
+      access_required dist DECIMAL(18,2),
+				access_required_time DECIMAL(18,2),
+				countyclass VARCHAR(100),
+				countyssa VARCHAR(100),
+				distance_criteria   DECIMAL(18,2),
+				existing_expansion VARCHAR(255),
+				incountyprvs INTEGER,
+				metaccess VARCHAR(2),
+				metoverall VARCHAR(2),
+				metprvs VARCHAR(2),
+				min_access_required_providers DECIMAL(18,2),
+				passpctcriteria  DECIMAL(18,2),
+				pctwithaccess  DECIMAL(18,2),
+				professional_facility VARCHAR(100),
+				providergroup VARCHAR(255),
+				requiredprvs INTEGER,
+				servicingprvs INTEGER,
+				speccode VARCHAR(10),
+				telehealth_credit_percent  DECIMAL(18,2),
+				time_criteria  DECIMAL(18,2),
+				total_providers INTEGER,
+      start_dt DATE FORMAT 'YYYY-MM-DD',
+      end_dt DATE FORMAT 'YYYY-MM-DD',
+PRIMARY KEY ( id ),
+UNIQUE ( id ,ntwk_input ,na_state ,county ,spec_input ,lob ),
+FOREIGN KEY ( standard_ntwk ) REFERENCES GIM_Analytics.na_standardized_network ( ntwk_out_id ),
+CONSTRAINT fk_specialty_id FOREIGN KEY ( specialty_id ) REFERENCES GIM_Analytics.na_standardized_specialty ( specialty_id ))
+;
